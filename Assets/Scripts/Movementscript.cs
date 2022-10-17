@@ -7,7 +7,7 @@ public class Movementscript : MonoBehaviour
     public CharacterController characterController;
     public Transform cam;
 
-    public float turnsmoothtime = 0.5f;
+    public float turnsmoothtime = 0.1f;
     public float turnsmoothspeed;
     //variables used for movement
     public float speed;
