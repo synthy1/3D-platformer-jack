@@ -22,6 +22,7 @@ public class cam : MonoBehaviour
     {
         //rotate orientation
         Vector3 veiwDir = Player.position - new Vector3(transform.position.x, Player.position.y, transform.position.z);
+        orient.forward = veiwDir.normalized;
 
         //rotate player
         float horizontalInput = Input.GetAxisRaw("Horizontal");
