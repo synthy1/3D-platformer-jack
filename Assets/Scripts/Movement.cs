@@ -109,6 +109,7 @@ public class Movement : MonoBehaviour
 
             Jump();
 
+            //resets jump after jumping so you can hold space to regester next jump
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
