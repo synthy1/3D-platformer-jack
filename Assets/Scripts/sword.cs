@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class sword : MonoBehaviour
 {
-    private void OnTriggerEnter(Collision colidor)
+    private void OnTriggerEnter(Collider enemy)
     {
-        if(colidor.tag == "Enemy")
+        if(enemy.gameObject.tag == "Enemy")
         {
             //kill enemy
-            colidor.destroy;
+            Destroy(enemy.gameObject); //place holder should play animation
         }
     }
 }
