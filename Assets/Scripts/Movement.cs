@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [Header("Movement")]
-    private float moveSpeed;
+    public float moveSpeed;
     public float walkSpeed;
     public float sprintSpeed;
     public float slideSpeed;
@@ -17,6 +17,8 @@ public class Movement : MonoBehaviour
     public float slopeIncreaseMultiplier;
 
     public float groundDrag;
+
+    private float currentMoveSpeed;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -44,6 +46,13 @@ public class Movement : MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
+    [Header("Boost values")]
+    public float boostSpeed;
+    private float currentBoostTimer;
+    public float boosttimer;
+
+    [SerializeField] private bool boosting;
+
 
     public Transform orientation;
 
@@ -66,6 +75,8 @@ public class Movement : MonoBehaviour
 
     public bool sliding;
 
+    
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -74,6 +85,8 @@ public class Movement : MonoBehaviour
         readyToJump = true;
 
         startYScale = transform.localScale.y;
+
+        currentBoostTimer = boosttimer;
     }
 
     private void Update()
@@ -85,11 +98,23 @@ public class Movement : MonoBehaviour
         SpeedControl();
         StateHandler();
 
+        //starts boost
+        if (boosting == true)
+        {
+            Boosting();
+        }
+
         // handle drag
         if (grounded)
+        {
             rb.drag = groundDrag;
+        }
         else
+        {
             rb.drag = 0;
+        }
+
+        
     }
 
     private void FixedUpdate()
@@ -288,5 +313,28 @@ public class Movement : MonoBehaviour
     public Vector3 GetSlopeMoveDirection(Vector3 direction)
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
+    }
+
+    public void BoostStart()
+    {
+        boosting = true;
+        currentMoveSpeed = moveSpeed;
+    }
+
+    private void Boosting()
+    {
+        currentBoostTimer -= Time.deltaTime;
+        moveSpeed = moveSpeed + boostSpeed;
+        if (currentBoostTimer <= 0f)
+        {
+            BoostEnd();
+        }
+    }
+
+    private void BoostEnd()
+    {
+        boosting = false;
+        currentBoostTimer = boosttimer;
+        moveSpeed = currentMoveSpeed;
     }
 }

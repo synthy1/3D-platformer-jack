@@ -38,16 +38,21 @@ public class Sliding : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         if (Input.GetKeyDown(slideKey) && (horizontalInput != 0 || verticalInput != 0))
+        {
             StartSlide();
-
+        }
         if (Input.GetKeyUp(slideKey) && pm.sliding)
+        {
             StopSlide();
+        }
     }
 
     private void FixedUpdate()
     {
         if (pm.sliding)
+        {
             SlidingMovement();
+        }
     }
 
     private void StartSlide()
