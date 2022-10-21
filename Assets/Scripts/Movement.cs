@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     public float walkSpeed;
     public float sprintSpeed;
     public float slideSpeed;
+    public float wallrunSpeed;
 
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
@@ -20,6 +21,8 @@ public class Movement : MonoBehaviour
 
     private float currentMoveSpeed;
 
+    public bool sliding;
+
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
@@ -30,6 +33,7 @@ public class Movement : MonoBehaviour
     public float crouchSpeed;
     public float crouchYScale;
     private float startYScale;
+    public bool crouching;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -50,10 +54,13 @@ public class Movement : MonoBehaviour
     public float boostSpeed;
     private float currentBoostTimer;
     public float boosttimer;
+    
+    public bool boosting;
 
-    [SerializeField] private bool boosting;
+    [Header("Wall Running")]
+    public bool wallrunning;
 
-
+    [Header("Refrences")]
     public Transform orientation;
 
     float horizontalInput;
@@ -69,11 +76,12 @@ public class Movement : MonoBehaviour
         walking,
         sprinting,
         crouching,
+        wallrunning,
         sliding,
         air
     }
 
-    public bool sliding;
+    
 
     
 
@@ -97,6 +105,7 @@ public class Movement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
+
 
         //starts boost
         if (boosting == true)
@@ -143,38 +152,53 @@ public class Movement : MonoBehaviour
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            crouching = true;
         }
 
         // stop crouch
         if (Input.GetKeyUp(crouchKey))
         {
             transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            crouching = false;
         }
     }
 
     private void StateHandler()
     {
+        //Wallrunning
+        if (wallrunning)
+        {
+            state = MovementState.wallrunning;
+            desiredMoveSpeed = wallrunSpeed;
+        }
+
         // Sliding
-        if (sliding)
+        else if (sliding && !wallrunning)
         {
             state = MovementState.sliding;
 
             if (OnSlope() && rb.velocity.y < 0.1f)
-                desiredMoveSpeed = slideSpeed;
-
+            {
+                if (!boosting)
+                {
+                    desiredMoveSpeed = slideSpeed;
+                }
+            }
             else
+            {
                 desiredMoveSpeed = sprintSpeed;
+            }
         }
 
         // Crouching
-        else if (Input.GetKey(crouchKey))
+        else if (Input.GetKey(crouchKey) && !wallrunning)
         {
             state = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
         }
 
         // Sprinting
-        else if (grounded && Input.GetKey(sprintKey))
+        else if (grounded && Input.GetKey(sprintKey) && !wallrunning)
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
@@ -213,10 +237,12 @@ public class Movement : MonoBehaviour
         float time = 0;
         float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
         float startValue = moveSpeed;
+       
 
         while (time < difference)
         {
             moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time / difference);
+            
 
             if (OnSlope())
             {
@@ -226,8 +252,9 @@ public class Movement : MonoBehaviour
                 time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
             }
             else
-                time += Time.deltaTime * speedIncreaseMultiplier;
-
+            {
+                time += Time.deltaTime * speedIncreaseMultiplier; 
+            }
             yield return null;
         }
 
@@ -323,12 +350,15 @@ public class Movement : MonoBehaviour
 
     private void Boosting()
     {
-        currentBoostTimer -= Time.deltaTime;
-        moveSpeed = moveSpeed + boostSpeed;
+        //ends boost when timer ends
         if (currentBoostTimer <= 0f)
         {
             BoostEnd();
         }
+        
+        //boost
+        moveSpeed = moveSpeed + boostSpeed;
+        currentBoostTimer -= Time.deltaTime;
     }
 
     private void BoostEnd()

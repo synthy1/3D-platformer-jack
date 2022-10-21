@@ -57,12 +57,20 @@ public class Sliding : MonoBehaviour
 
     private void StartSlide()
     {
-        pm.sliding = true;
+        if(pm.wallrunning == false)
+        {
+            pm.sliding = true;
 
-        playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
-        rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            if (!pm.crouching)
+            {
+                playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
+            }
 
-        slideTimer = maxSlideTime;
+            //aplys force to push player to floor
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+
+            slideTimer = maxSlideTime;
+        }
     }
 
     private void SlidingMovement()
@@ -90,7 +98,9 @@ public class Sliding : MonoBehaviour
     private void StopSlide()
     {
         pm.sliding = false;
-
-        playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
+        if (!pm.crouching)
+        {
+            playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
+        }
     }
 }
