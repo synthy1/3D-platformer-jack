@@ -78,7 +78,8 @@ public class Movement : MonoBehaviour
         crouching,
         wallrunning,
         sliding,
-        air
+        air,
+        standing,
     }
 
     
@@ -186,7 +187,10 @@ public class Movement : MonoBehaviour
             }
             else
             {
-                desiredMoveSpeed = sprintSpeed;
+                if (!boosting)
+                {
+                    desiredMoveSpeed = moveSpeed;
+                }
             }
         }
 
@@ -198,27 +202,40 @@ public class Movement : MonoBehaviour
         }
 
         // Sprinting
-        else if (grounded && Input.GetKey(sprintKey) && !wallrunning)
+        else if (grounded && Input.GetKey(sprintKey) && !wallrunning && ((horizontalInput == 1f || verticalInput == 1f) || grounded && (horizontalInput == -1f || verticalInput == -1f)))
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
         }
 
         // Walking
-        else if (grounded)
+        else if (grounded && ((horizontalInput == 1f || verticalInput == 1f) || grounded && (horizontalInput == -1f || verticalInput == -1f)))
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
+        }
+
+        //idle
+        else if(grounded && horizontalInput == 0f && verticalInput == 0f)
+        {
+            state = MovementState.standing;
+            desiredMoveSpeed = 0f;
         }
 
         // Air
         else
         {
             state = MovementState.air;
+            if (!boosting)
+            {
+                desiredMoveSpeed = moveSpeed;
+            }
         }
 
+       
+
         // check if desiredMoveSpeed has changed drastically
-        if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
+        if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 7f && moveSpeed != 0)
         {
             StopAllCoroutines();
             StartCoroutine(SmoothlyLerpMoveSpeed());
@@ -357,7 +374,10 @@ public class Movement : MonoBehaviour
         }
         
         //boost
-        moveSpeed = moveSpeed + boostSpeed;
+        if(state != MovementState.standing)
+        {
+            moveSpeed = moveSpeed + boostSpeed;
+        }
         currentBoostTimer -= Time.deltaTime;
     }
 
