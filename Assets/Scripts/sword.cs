@@ -18,9 +18,6 @@ public class sword : MonoBehaviour
         {
             //kill enemy
             Destroy(enemy.gameObject); //place holder should play animation
-
-            //tell player you have killed target
-
         }
     }
     private void Start()
