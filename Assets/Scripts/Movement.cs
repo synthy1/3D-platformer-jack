@@ -73,6 +73,7 @@ public class Movement : MonoBehaviour
     public MovementState state;
     public enum MovementState
     {
+        idle,
         walking,
         sprinting,
         crouching,
@@ -184,9 +185,12 @@ public class Movement : MonoBehaviour
                     desiredMoveSpeed = slideSpeed;
                 }
             }
-            else
+            else if(OnSlope() && rb.velocity.y > 0.1f)
             {
-                desiredMoveSpeed = sprintSpeed;
+                if (!boosting)
+                {
+                    desiredMoveSpeed = moveSpeed;
+                }
             }
         }
 
@@ -198,27 +202,38 @@ public class Movement : MonoBehaviour
         }
 
         // Sprinting
-        else if (grounded && Input.GetKey(sprintKey) && !wallrunning)
+        else if (grounded && Input.GetKey(sprintKey) && !wallrunning && (horizontalInput != 0 || verticalInput != 0))
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
         }
 
         // Walking
-        else if (grounded)
+        else if (grounded && (horizontalInput != 0 || verticalInput != 0))
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
+        }
+        
+        //idle
+        else if (grounded && horizontalInput == 0 && verticalInput == 0)
+        {
+            state = MovementState.idle;
+            desiredMoveSpeed = 0f;
         }
 
         // Air
         else
         {
             state = MovementState.air;
+            if (!boosting)
+            {
+                desiredMoveSpeed = moveSpeed;
+            }
         }
 
         // check if desiredMoveSpeed has changed drastically
-        if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 4f && moveSpeed != 0)
+        if (Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 7f && moveSpeed != 0)
         {
             StopAllCoroutines();
             StartCoroutine(SmoothlyLerpMoveSpeed());

@@ -7,18 +7,19 @@ public class Timedscore : MonoBehaviour
 {
     [Header("refrences")]
     public Text score;
+    float timestart;
     // Start is called before the first frame update
     void Start()
     {
-        score.text = 0.ToString("0");
+        timestart = 0f;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        
+        timestart += Time.deltaTime;
 
-        score.text += Time.deltaTime.ToString("f0");
+        score.text = timestart.ToString("Time: 0.000");
     }
 }
