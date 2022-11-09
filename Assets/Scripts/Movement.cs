@@ -23,6 +23,8 @@ public class Movement : MonoBehaviour
 
     public bool sliding;
 
+    public float gravforce;
+
     [Header("Jumping")]
     public float jumpForce;
     public float jumpCooldown;
@@ -106,7 +108,7 @@ public class Movement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
-
+        gravity();
 
         //starts boost
         if (boosting == true)
@@ -138,7 +140,7 @@ public class Movement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded || Input.GetKey(jumpKey) && readyToJump && OnSlope())
         {
             readyToJump = false;
 
@@ -170,7 +172,7 @@ public class Movement : MonoBehaviour
         if (wallrunning)
         {
             state = MovementState.wallrunning;
-            desiredMoveSpeed = wallrunSpeed;
+            desiredMoveSpeed = moveSpeed;
         }
 
         // Sliding
@@ -209,17 +211,19 @@ public class Movement : MonoBehaviour
         }
 
         // Walking
-        else if (grounded && (horizontalInput != 0 || verticalInput != 0))
+        else if (grounded && (horizontalInput != 0 || verticalInput != 0) || OnSlope() && (horizontalInput != 0 || verticalInput != 0))
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
+            rb.useGravity = true;
         }
         
         //idle
-        else if (grounded && horizontalInput == 0 && verticalInput == 0)
+        else if (grounded && horizontalInput == 0 && verticalInput == 0 || OnSlope() && horizontalInput == 0 && verticalInput == 0)
         {
             state = MovementState.idle;
             desiredMoveSpeed = 0f;
+            rb.useGravity = true;
         }
 
         // Air
@@ -308,7 +312,9 @@ public class Movement : MonoBehaviour
         if (OnSlope() && !exitingSlope)
         {
             if (rb.velocity.magnitude > moveSpeed)
+            {
                 rb.velocity = rb.velocity.normalized * moveSpeed;
+            }
         }
 
         // limiting speed on ground or in air
@@ -331,8 +337,19 @@ public class Movement : MonoBehaviour
 
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        if (!OnSlope())
+        {
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        }
+        if (OnSlope())
+        {
+            rb.AddForce(transform.up * (jumpForce + 5f), ForceMode.Impulse);
+        }
+    
+        if(moveSpeed < 49f)
+        {
+            moveSpeed += 1f;
+        }
     }
     private void ResetJump()
     {
@@ -381,5 +398,10 @@ public class Movement : MonoBehaviour
         boosting = false;
         currentBoostTimer = boosttimer;
         moveSpeed = currentMoveSpeed;
+    }
+
+    private void gravity()
+    {
+        rb.AddForce(transform.up * -gravforce, ForceMode.Force);
     }
 }
