@@ -57,7 +57,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6382358592054726302}
-  m_LocalRotation: {x: 0.07374567, y: 0.000000024423729, z: -0.0000000018060621, w: 0.9972771}
+  m_LocalRotation: {x: 0.070889026, y: 0.000000016643243, z: -0.000000001182799, w: 0.9974842}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -201,6 +201,8 @@ MonoBehaviour:
   boosting: 0
   wallrunning: 0
   orientation: {fileID: 6382358593262128916}
+  lvlstart: 0
+  lvlend: 0
   state: 0
 --- !u!114 &6382358592537155937
 MonoBehaviour:
@@ -239,7 +241,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   wallRunForce: 200
-  wallClimbSpeed: 3
+  wallClimbSpeed: 10
   maxWallRunTime: 1.5
   upwardsRunKey: 304
   downwardsRunKey: 306
@@ -331,7 +333,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6382358592825727437}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: efa3f943b3510ab40b9fa88a9d81dd05, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.50000006
@@ -365,8 +367,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6382358592847288517}
-  m_LocalRotation: {x: 0.14361109, y: -0.0009780033, z: 0.00014192333, w: 0.98963374}
-  m_LocalPosition: {x: 30.223083, y: 34.55451, z: -118.02783}
+  m_LocalRotation: {x: 0.1382734, y: -0.0008558182, z: 0.00011948468, w: 0.99039376}
+  m_LocalPosition: {x: 30.223083, y: 35.828228, z: -122.58585}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6382358592703306732}
@@ -709,7 +711,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6382358593172988360}
-  m_LocalRotation: {x: 0.097888045, y: 1e-45, z: -0, w: 0.9951975}
+  m_LocalRotation: {x: 0.09252102, y: 0.000000017659856, z: -0.0000000016409463, w: 0.99571073}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -939,7 +941,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6382358593291458430}
-  m_LocalRotation: {x: 0.14361107, y: -0.0009780033, z: 0.00014192333, w: 0.98963374}
+  m_LocalRotation: {x: 0.13827339, y: -0.00085581804, z: 0.00011948465, w: 0.99039376}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1152,8 +1154,8 @@ MonoBehaviour:
   m_Strategy: 0
   m_MaximumEffort: 4
   m_SmoothingTime: 0
-  m_Damping: 0.6
-  m_DampingWhenOccluded: 0.6
+  m_Damping: 0
+  m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
 --- !u!1 &6382358593958275015
 GameObject:
