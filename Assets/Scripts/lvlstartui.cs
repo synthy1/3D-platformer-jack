@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class speedcounter : MonoBehaviour
+
+public class lvlstartui : MonoBehaviour
 {
-    [Header("Refrences")]
+    [Header("refrenses")]
     Movement player;
-    public Text speed;
-
-
+    public GameObject ui;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +18,13 @@ public class speedcounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!player.lvlstart)
+        {
+            ui.gameObject.SetActive(false);
+        }
         if (player.lvlstart)
         {
-            speed.text = player.moveSpeed.ToString("Speed: 0");
+            ui.gameObject.SetActive(true);
         }
     }
 }

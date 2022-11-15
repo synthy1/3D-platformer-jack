@@ -65,6 +65,10 @@ public class Movement : MonoBehaviour
     [Header("Refrences")]
     public Transform orientation;
 
+    [Header("GAMESETTINGS")]
+    public bool lvlstart;
+    public bool lvlend;
+
     float horizontalInput;
     float verticalInput;
 
@@ -110,6 +114,11 @@ public class Movement : MonoBehaviour
         StateHandler();
         gravity();
 
+        //sets game state
+        if (lvlend)
+        {
+            lvlstart = false;
+        }
         //starts boost
         if (boosting == true)
         {
@@ -172,7 +181,14 @@ public class Movement : MonoBehaviour
         if (wallrunning)
         {
             state = MovementState.wallrunning;
-            desiredMoveSpeed = moveSpeed;
+            if (!boosting)
+            {
+                desiredMoveSpeed = moveSpeed;
+            }
+            else
+            {
+                desiredMoveSpeed = wallrunSpeed;
+            }
         }
 
         // Sliding
