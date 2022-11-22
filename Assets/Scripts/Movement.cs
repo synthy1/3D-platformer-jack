@@ -64,6 +64,7 @@ public class Movement : MonoBehaviour
 
     [Header("Refrences")]
     public Transform orientation;
+    public Animator anim;
 
     [Header("GAMESETTINGS")]
     public bool lvlstart;
@@ -135,6 +136,8 @@ public class Movement : MonoBehaviour
             rb.drag = 0;
         }
 
+        anim.SetBool("grounded", grounded);
+        anim.SetFloat("Speed", moveSpeed);
         
     }
 
@@ -195,6 +198,7 @@ public class Movement : MonoBehaviour
         else if (sliding && !wallrunning)
         {
             state = MovementState.sliding;
+            anim.SetTrigger("Slide");
 
             if (OnSlope() && rb.velocity.y < 0.1f)
             {
@@ -224,6 +228,7 @@ public class Movement : MonoBehaviour
         {
             state = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed;
+            anim.SetBool("running", true);
         }
 
         // Walking
@@ -232,6 +237,7 @@ public class Movement : MonoBehaviour
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
             rb.useGravity = true;
+            anim.SetBool("running", false);
         }
         
         //idle
@@ -350,6 +356,7 @@ public class Movement : MonoBehaviour
     private void Jump()
     {
         exitingSlope = true;
+        anim.SetTrigger("Jump");
 
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -370,6 +377,7 @@ public class Movement : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+        anim.SetBool("Jump", false);
 
         exitingSlope = false;
     }
