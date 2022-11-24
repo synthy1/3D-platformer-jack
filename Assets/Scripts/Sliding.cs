@@ -15,8 +15,8 @@ public class Sliding : MonoBehaviour
     public float slideForce;
     private float slideTimer;
 
-    public float slideYScale;
-    private float startYScale;
+    public CapsuleCollider slideYScale;
+    public CapsuleCollider startYScale;
 
     [Header("Input")]
     public KeyCode slideKey = KeyCode.LeftControl;
@@ -29,7 +29,6 @@ public class Sliding : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<Movement>();
 
-        startYScale = playerObj.localScale.y;
     }
 
     private void Update()
@@ -63,7 +62,8 @@ public class Sliding : MonoBehaviour
 
             if (!pm.crouching)
             {
-                playerObj.localScale = new Vector3(playerObj.localScale.x, slideYScale, playerObj.localScale.z);
+                startYScale.gameObject.active = false;
+                slideYScale.gameObject.active = true;
             }
 
             //aplys force to push player to floor
@@ -100,7 +100,8 @@ public class Sliding : MonoBehaviour
         pm.sliding = false;
         if (!pm.crouching)
         {
-            playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
+            startYScale.gameObject.active = true;
+            slideYScale.gameObject.active = false;
         }
     }
 }
