@@ -7,23 +7,36 @@ public class sword : MonoBehaviour
     [Header("Refrences")]
     Movement player;
     public BoxCollider hitbox;
+    public GameObject bloodSplat;
+    public Animator anim;
+    Transform bloodLocation;
+    ParticleSystem bloodsystem;
 
     [Header("Key Binds")]
     public KeyCode attack = KeyCode.Mouse0;
-
 
     
     private void OnTriggerEnter(Collider enemy)
     {
         if(enemy.gameObject.tag == "Enemy")
         {
-            enemy.attachedRigidbody.AddForce(0, 10, 0);
+            bloodLocation = enemy.transform;
+            bloodSplat.transform.position = bloodLocation.position;
+            if(bloodSplat.transform.position == bloodLocation.position)
+            {
+                bloodsystem.Play();
+            }
             //kill enemy
             Destroy(enemy.gameObject); //place holder should play animation
         }
         if(enemy.gameObject.tag == "Start enemy")
         {
-            enemy.attachedRigidbody.AddForce(0, 10, 0);
+            bloodLocation = enemy.transform;
+            bloodSplat.transform.position = bloodLocation.position;
+            if (bloodSplat.transform.position == bloodLocation.position)
+            {
+                bloodsystem.Play();
+            }
             player.lvlstart = true;
             //kill enemy
             Destroy(enemy.gameObject); //place holder should play animation
@@ -33,6 +46,7 @@ public class sword : MonoBehaviour
     {
         hitbox.enabled = false;
         player = GameObject.Find("Thirdperson_Character").GetComponent<Movement>();
+        bloodsystem = bloodSplat.GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -43,8 +57,10 @@ public class sword : MonoBehaviour
 
             //sets off hitbox
             hitbox.enabled = true;
-            
+
+
             //play attack animations
+            anim.SetTrigger("attack");
         }
 
         //attack off after you let go of keybind

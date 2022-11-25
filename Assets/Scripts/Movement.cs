@@ -138,7 +138,8 @@ public class Movement : MonoBehaviour
 
         anim.SetBool("grounded", grounded);
         anim.SetFloat("Speed", moveSpeed);
-        
+        anim.SetBool("slide start", sliding);
+
     }
 
     private void FixedUpdate()
@@ -198,7 +199,6 @@ public class Movement : MonoBehaviour
         else if (sliding && !wallrunning)
         {
             state = MovementState.sliding;
-            anim.SetTrigger("Slide");
 
             if (OnSlope() && rb.velocity.y < 0.1f)
             {

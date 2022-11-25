@@ -62,8 +62,8 @@ public class Sliding : MonoBehaviour
 
             if (!pm.crouching)
             {
-                startYScale.gameObject.active = false;
-                slideYScale.gameObject.active = true;
+                startYScale.enabled = false;
+                slideYScale.enabled = true;
             }
 
             //aplys force to push player to floor
@@ -100,8 +100,8 @@ public class Sliding : MonoBehaviour
         pm.sliding = false;
         if (!pm.crouching)
         {
-            startYScale.gameObject.active = true;
-            slideYScale.gameObject.active = false;
+            startYScale.enabled = true;
+            slideYScale.enabled = false;
         }
     }
 }
