@@ -19,7 +19,10 @@ public class buttons : MonoBehaviour
     {
         camPos = menucam.transform.position;
         startCamPos = menucam.transform.position;
-        
+
+        //makes sure menu one is open first
+        menu1.active = true;
+        menu2.active = false;
     }
     public void ExitGame()
     {
@@ -29,7 +32,7 @@ public class buttons : MonoBehaviour
     public void OpenMenu2()
     {
         menu1.active = false; //hides current menu
-
+        menu2.active = true;
     }
 
     public void Credits()
@@ -40,5 +43,16 @@ public class buttons : MonoBehaviour
     public void Settings()
     {
         menu1.active = false; //hides current menu
+    }
+
+    public void ReturnFromLvlSlc()
+    {
+        menu1.active = true; 
+        menu2.active = false;//hides current menu
+    }
+
+    public void lvl1()
+    {
+        SceneManager.LoadScene(1);
     }
 }
