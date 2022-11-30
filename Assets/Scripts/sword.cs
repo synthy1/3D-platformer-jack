@@ -12,6 +12,7 @@ public class sword : MonoBehaviour
     Transform bloodLocation;
     ParticleSystem bloodsystem;
     Sfx sound;
+    gameManager gm;
 
     [Header("Key Binds")]
     public KeyCode attack = KeyCode.Mouse0;
@@ -46,6 +47,7 @@ public class sword : MonoBehaviour
             Destroy(enemy.gameObject); //place holder should play animation
             sound.PlayDeath();
             sound.gaurdexpo.Pause();
+            gm.opendoor();
         }
     }
     private void Start()
@@ -54,6 +56,7 @@ public class sword : MonoBehaviour
         player = GameObject.Find("Thirdperson_Character").GetComponent<Movement>();
         bloodsystem = bloodSplat.GetComponent<ParticleSystem>();
         sound = GameObject.Find("GameManager").GetComponent<Sfx>();
+        gm = GameObject.Find("GameManager").GetComponent<gameManager>();
     }
 
     private void Update()

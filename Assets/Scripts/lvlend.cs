@@ -16,6 +16,14 @@ public class lvlend : MonoBehaviour
         game = GameObject.Find("GameManager").GetComponent<gameManager>();
     }
 
+    private void Update()
+    {
+        if (player.lvlend)
+        {
+            game.lvlend();
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player" && game.startEnemys == game.enemysToKill)
@@ -23,4 +31,5 @@ public class lvlend : MonoBehaviour
             player.lvlend = true;
         }
     }
+
 }

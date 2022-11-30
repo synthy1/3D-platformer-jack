@@ -55,4 +55,8 @@ public class buttons : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

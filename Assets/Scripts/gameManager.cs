@@ -7,11 +7,15 @@ public class gameManager : MonoBehaviour
     [Header("Refrences")]
     public int startEnemys;
     public int enemysToKill;
+    public GameObject door;
+    public GameObject lvlfin;
     // Start is called before the first frame update
     void Start()
     {
         int currentEnemys = GameObject.FindGameObjectsWithTag("Enemy").Length;
         startEnemys = currentEnemys;
+        door.transform.position = new Vector3(21.7490005f, -9.18999958f, -20.6499996f);
+        lvlfin.active = false;
     }
 
     // Update is called once per frame
@@ -19,5 +23,16 @@ public class gameManager : MonoBehaviour
     {
         int currentEnemys = GameObject.FindGameObjectsWithTag("Enemy").Length;
         enemysToKill = startEnemys - currentEnemys;
+    }
+
+    public void opendoor()
+    {
+        door.transform.position = new Vector3(21.7490005f, -7.67000008f, -20.6499996f);
+    }
+
+    public void lvlend()
+    {
+        lvlfin.active = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }
