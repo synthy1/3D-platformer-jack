@@ -33,7 +33,8 @@ public class Movement : MonoBehaviour
 
     [Header("Crouching")]
     public float crouchSpeed;
-    public float crouchYScale;
+    public CapsuleCollider crouchYScale;
+    public CapsuleCollider normalYScale;
     private float startYScale;
     public bool crouching;
 
@@ -65,6 +66,7 @@ public class Movement : MonoBehaviour
     [Header("Refrences")]
     public Transform orientation;
     public Animator anim;
+    Sfx sound;
 
     [Header("GAMESETTINGS")]
     public bool lvlstart;
@@ -97,6 +99,7 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        sound = GameObject.Find("GameManager").GetComponent<Sfx>();
 
         readyToJump = true;
 
@@ -166,7 +169,8 @@ public class Movement : MonoBehaviour
         // start crouch
         if (Input.GetKeyDown(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            crouchYScale.enabled = true;
+            normalYScale.enabled = false;
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
             crouching = true;
         }
@@ -174,7 +178,8 @@ public class Movement : MonoBehaviour
         // stop crouch
         if (Input.GetKeyUp(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+            crouchYScale.enabled = false;
+            normalYScale.enabled = true;
             crouching = false;
         }
     }
