@@ -9,6 +9,7 @@ public class gameManager : MonoBehaviour
     public int enemysToKill;
     public GameObject door;
     public GameObject lvlfin;
+    public static gameManager Instance;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,18 @@ public class gameManager : MonoBehaviour
     {
         int currentEnemys = GameObject.FindGameObjectsWithTag("Enemy").Length;
         enemysToKill = startEnemys - currentEnemys;
+    }
+
+    public void Awake()
+    {
+
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void opendoor()

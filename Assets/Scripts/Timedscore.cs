@@ -12,7 +12,7 @@ public class Timedscore : MonoBehaviour
     float timestart;
 
     [SerializeField]
-    private Text currentRunTime;
+    private TextMeshProUGUI bestruntime;
     float runTime;
 
     [SerializeField]
@@ -26,7 +26,6 @@ public class Timedscore : MonoBehaviour
         timestart = 0f;
         player = GameObject.Find("Thirdperson_Character").GetComponent<Movement>();
         Time.timeScale = 1f;
-        besttimelvl1 = 0f;
     }
 
 
@@ -43,6 +42,8 @@ public class Timedscore : MonoBehaviour
         {
             runTime = timestart;
             finalscore.text = runTime.ToString("This Run: 0.000");
+            bestruntime.text = besttimelvl1.ToString("Best Run: 0.000");
+
             if (besttimelvl1 <= runTime)
             {
                 besttimelvl1 = runTime;

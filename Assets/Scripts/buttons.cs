@@ -11,6 +11,7 @@ public class buttons : MonoBehaviour
     public GameObject menu2;
     public GameObject menu3;
     public Camera menucam;
+    int current;
 
     [Header("Vectors")]
     Vector3 camPos;
@@ -23,6 +24,11 @@ public class buttons : MonoBehaviour
         //makes sure menu one is open first
         menu1.active = true;
         menu2.active = false;
+        
+    }
+    private void Update()
+    {
+        current = SceneManager.GetActiveScene().buildIndex;
     }
     public void ExitGame()
     {
@@ -58,5 +64,9 @@ public class buttons : MonoBehaviour
     public void BackToMenu()
     {
         SceneManager.LoadScene(0);
+    } 
+    public void Retry()
+    {
+        SceneManager.LoadScene(current);
     }
 }
