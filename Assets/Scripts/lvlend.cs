@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class lvlend : MonoBehaviour
 {
     [Header("refrenses")]
     Movement player;
     gameManager game;
+    public GameObject uiEnd;
+
 
 
     // Start is called before the first frame update
@@ -21,6 +24,7 @@ public class lvlend : MonoBehaviour
         if (player.lvlend)
         {
             game.lvlend();
+            uiEnd.active = true;
         }
     }
 

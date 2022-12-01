@@ -139,6 +139,7 @@ public class Movement : MonoBehaviour
             rb.drag = 0;
         }
 
+        //animations
         anim.SetBool("grounded", grounded);
         anim.SetFloat("Speed", moveSpeed);
         anim.SetBool("slide start", sliding);

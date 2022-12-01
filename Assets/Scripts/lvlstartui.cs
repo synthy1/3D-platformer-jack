@@ -9,10 +9,12 @@ public class lvlstartui : MonoBehaviour
     [Header("refrenses")]
     Movement player;
     public GameObject ui;
+    public GameObject ui2;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Thirdperson_Character").GetComponent<Movement>();
+        ui2.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -26,5 +28,6 @@ public class lvlstartui : MonoBehaviour
         {
             ui.gameObject.SetActive(true);
         }
+
     }
 }

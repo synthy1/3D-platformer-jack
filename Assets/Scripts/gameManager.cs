@@ -25,7 +25,6 @@ public class gameManager : MonoBehaviour
         lvlfin = GameObject.Find("finish");
         startEnemys = currentEnemys;
         door.transform.position = new Vector3(21.7490005f, -9.18999958f, -20.6499996f);
-        lvlfin.active = false;
     }
 
     // Update is called once per frame
@@ -54,7 +53,6 @@ public class gameManager : MonoBehaviour
 
     public void lvlend()
     {
-        lvlfin.active = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 0f;

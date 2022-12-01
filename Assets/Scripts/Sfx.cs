@@ -7,13 +7,13 @@ public class Sfx : MonoBehaviour
     // Start is called before the first frame update
     [Header("Audio")]
     public AudioClip[] deathsounds;
-    AudioSource deathsound;
+    public AudioSource deathsound;
     public AudioSource gaurdexpo;
-    AudioSource hit;
-    AudioSource blood;
-    AudioSource button;
+    public AudioSource hit;
+    public AudioSource blood;
+    public AudioSource button;
 
-    private void Start()
+    private void update()
     {
         deathsound = GameObject.Find("death").GetComponent<AudioSource>();
         gaurdexpo = GameObject.Find("guard expo").GetComponent<AudioSource>();
