@@ -7,10 +7,9 @@ public class buttons : MonoBehaviour
 {
 
     [Header("refrences")]
-    public GameObject menu1;
-    public GameObject menu2;
-    public GameObject menu3;
-    public Camera menucam;
+    GameObject menu1;
+    GameObject menu2;
+    GameObject menu3;
     int current;
 
     [Header("Vectors")]
@@ -18,8 +17,9 @@ public class buttons : MonoBehaviour
     Vector3 startCamPos;
     private void Start()
     {
-        camPos = menucam.transform.position;
-        startCamPos = menucam.transform.position;
+        menu1 = GameObject.Find("menu_1");
+        menu2 = GameObject.Find("menu_2");
+        menu3 = GameObject.Find("menu_3");
 
         //makes sure menu one is open first
         menu1.active = true;

@@ -7,13 +7,22 @@ public class gameManager : MonoBehaviour
     [Header("Refrences")]
     public int startEnemys;
     public int enemysToKill;
-    public GameObject door;
-    public GameObject lvlfin;
+    GameObject door;
+    GameObject lvlfin;
     public static gameManager Instance;
+    Timedscore ts;
+
+    [Header("lvl settings")]
+    public float besttimelvl1;
+
+
     // Start is called before the first frame update
     void Start()
     {
         int currentEnemys = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        ts = GameObject.Find("UI manaager").GetComponent<Timedscore>();
+        door = GameObject.Find("door");
+        lvlfin = GameObject.Find("finish");
         startEnemys = currentEnemys;
         door.transform.position = new Vector3(21.7490005f, -9.18999958f, -20.6499996f);
         lvlfin.active = false;

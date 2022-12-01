@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 312401598319684384}
   - component: {fileID: 312401598319684387}
+  - component: {fileID: 1455142749}
+  - component: {fileID: 1455142752}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,3 +47,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startEnemys: 0
   enemysToKill: 0
+  door: {fileID: 0}
+  lvlfin: {fileID: 0}
+  besttimelvl1: 0
+--- !u!114 &1455142749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312401598319684386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d42641d25082454d94eb209c0909906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathsounds:
+  - {fileID: 8300000, guid: b41b1baaf02dd1447bf3732aea7252c8, type: 3}
+  - {fileID: 8300000, guid: 7a2265a7d5ef32a468e686cf06300f5d, type: 3}
+  deathsound: {fileID: 0}
+  gaurdexpo: {fileID: 0}
+  hit: {fileID: 0}
+  blood: {fileID: 0}
+  button: {fileID: 0}
+--- !u!114 &1455142752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312401598319684386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b5612e651c0244289a7f15a6cc1908, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menu1: {fileID: 0}
+  menu2: {fileID: 0}
+  menu3: {fileID: 0}
+  menucam: {fileID: 0}
