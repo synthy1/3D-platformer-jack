@@ -7,7 +7,6 @@ public class gameManager : MonoBehaviour
     [Header("Refrences")]
     public int startEnemys;
     public int enemysToKill;
-    GameObject door;
     GameObject lvlfin;
     public static gameManager Instance;
     Timedscore ts;
@@ -19,12 +18,15 @@ public class gameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //lvl
+        besttimelvl1 = 9999999999;
+
+
         int currentEnemys = GameObject.FindGameObjectsWithTag("Enemy").Length;
         ts = GameObject.Find("UI manaager").GetComponent<Timedscore>();
-        door = GameObject.Find("door");
         lvlfin = GameObject.Find("finish");
         startEnemys = currentEnemys;
-        door.transform.position = new Vector3(21.7490005f, -9.18999958f, -20.6499996f);
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -46,10 +48,6 @@ public class gameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void opendoor()
-    {
-        door.transform.position = new Vector3(21.7490005f, -7.67000008f, -20.6499996f);
-    }
 
     public void lvlend()
     {
